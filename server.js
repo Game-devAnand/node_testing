@@ -1,5 +1,5 @@
 const express = require("express");
-const res = require("express/lib/response");
+const path = require("path");
 const app = express();
 
 app.listen(3000);
@@ -14,9 +14,31 @@ const students = [
   { id: 5, name: "pavan" },
 ];
 
+app.get("/api/math/add", (req, res) => {
+  res.send("ADDED");
+});
+
 app.get("/", (req, res) => {
   res.send("HI");
 });
+
+app.get("/fun", (req, res) => {
+  fun();
+  res.send("fun");
+});
+
+app.get("/web", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
+
+app.get("/data", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/data.json"));
+});
+
+app.get("/list", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/list.html"));
+});
+
 
 app.get("/api/students", (req, res) => {
   res.send(students);
@@ -54,10 +76,10 @@ app.put("/api/students/:id", (req, res) => {
 
 app.delete("/api/students/:id", (req, res) => {
   const std = students.find((c) => c.id === parseInt(req.params.id));
-  if(!std) {
+  if (!std) {
     res.sendStatus(404).send("Not found data");
     return;
-    }
+  }
   const index = students.indexOf(std);
   students.splice(index, 1);
   res.send(students);

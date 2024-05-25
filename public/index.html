@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WEB</title>
+  </head>
+  <body>
+    <h1>TEST of api 1</h1>
+    <button onclick="Add()" ;>ADD</button>
+    <button>SUB</button>
+    <button>MUL</button>
+    <button>DIV</button>
+    <form>
+      <label for="num1">First num:</label><br />
+      <input type="number" class="a" id="num10" name="num1" /><br />
+      <label for="num12">Last num:</label><br />
+      <input type="number" id="num20" name="num2" />
+    </form>
+    <button onclick="upDate();dataFetch();">DISPLAY</button>
+    <h1 id="val">Val :</h1>
+    <script>
+      let res = 0;
+      function upDate() {
+        document.getElementById("val").innerHTML += res;
+      }
+      function Add() {
+        let num1 = Number(document.getElementById("num10").value);
+        let num2 = Number(document.getElementById("num20").value);
+        res = num1 + num2;
+        alert(res);
+      }
+
+      const dataFetch = () => {
+        const apiUrl = "http://localhost:3000/data";
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", apiUrl, true); // true for asynchronous
+
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+            console.log(data);
+            // Process the fetched data here
+          } else {
+            console.error("Error fetching data:", xhr.statusText);
+          }
+        };
+
+        xhr.onerror = function (error) {
+          console.error("Error fetching data:", error);
+        };
+
+        xhr.send();
+      };
+    </script>
+  </body>
+</html>

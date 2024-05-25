@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>List of data</h1>
+    <button onclick="dataFetch()">update</button>
+    <div class="list" id="list">
+      <p></p>
+    </div>
+    <div id="data">
+      <p></p>
+    </div>
+    <script>
+      //   let list = document.querySelector(".list");
+      //   document.getElementById("data").innerHTML = "data";
+      const dataFetch = () => {
+        const apiUrl = "http://localhost:3000/data";
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", apiUrl, true); // true for asynchronous
+
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+            console.log(data);
+            document.getElementById("data").innerHTML = data[0].name;
+
+            data.forEach((element) => {
+              document.getElementById(
+                "list"
+              ).innerHTML += `<p>${element.name}</p>`;
+              console.log("element : ", typeof element);
+            });
+
+            return data;
+            // Process the fetched data here
+          } else {
+            console.error("Error fetching data:", xhr.statusText);
+          }
+        };
+
+        xhr.onerror = function (error) {
+          console.error("Error fetching data:", error);
+        };
+
+        xhr.send();
+      };
+    </script>
+  </body>
+</html>
